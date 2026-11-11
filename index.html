@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title> — Nosso Livro</title>
+  <title>Nós duas — Nosso Livro de Amor</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
     body { min-height: 100vh; min-height: 100svh; padding: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow-x: hidden; background: #120e10; color: #332729; font-family: 'Playfair Display', Georgia, serif; }
     .book { position: relative; width: min(100%, 400px); height: min(76svh, 680px); min-height: 440px; perspective: 1800px; }
     .book-base { position: absolute; inset: 0; border-radius: 4px 18px 18px 4px; background: #fcf9f5; box-shadow: 0 20px 40px #0009; }
-    .page { position: absolute; inset: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 4px 18px 18px 4px; background: #fdfaf6; box-shadow: 0 10px 25px #0005; transform-origin: left center; backface-visibility: hidden; transition: transform .8s cubic-bezier(.4,.2,.2,1), opacity .6s ease; }
+    .page { position: absolute; inset: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 4px 18px 18px 4px; background: #fdfaf6; box-shadow: 0 10px 25px #0005; transform-origin: left center; backface-visibility: hidden; transition: transform .8s cubic-bezier(.4,.2,.2,1), opacity .6s ease; cursor: pointer; }
     .page::before { content: ''; position: absolute; z-index: 2; inset: 0 auto 0 0; width: 18px; pointer-events: none; background: linear-gradient(90deg,#0003,transparent); }
     .page.flipped { transform: rotateY(-110deg); opacity: 0; pointer-events: none; }
     .cover { align-items: center; justify-content: center; padding: 30px; text-align: center; color: #e8d0a9; background: linear-gradient(135deg,#4a151b,#2b0b10); border: 6px double #b38b59; border-left-width: 14px; }
@@ -25,7 +25,7 @@
     .copy { flex: 1; color: #3b2c2e; font-size: .98rem; line-height: 1.68; white-space: pre-line; }
     .signature { margin-top: 16px; color: #6d4b50; text-align: right; font-size: .95rem; font-style: italic; }
     .footer { margin-top: 12px; color: #9c888b; text-align: center; font-size: .74rem; }
-    .music-page { padding: 14px; }
+    .music-page { padding: 14px; cursor: default; }
     .player { min-height: 0; flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; padding: 17px; overflow: hidden; border-radius: 14px; background: #121212; color: white; font-family: 'Plus Jakarta Sans',sans-serif; }
     .player-label { color: #b3b3b3; text-align: center; font-size: .67rem; letter-spacing: .14em; text-transform: uppercase; }
     .album-art { width: min(100%, 200px, 31vh); aspect-ratio: 1; margin: 0 auto; overflow: hidden; border-radius: 12px; background: #231a1c; box-shadow: 0 8px 24px #0009; }
@@ -50,9 +50,16 @@
   <main>
     <div class="book" id="book">
       <div class="book-base"></div>
+
+      <!-- 1. CAPA -->
       <section class="page cover" id="page-0" onclick="turnNext()">
-        <p class="cover-sub">Um livro de amor</p><h1>Nós Dois</h1><div class="ornament">❦</div><p class="cover-hint">Toque para abrir</p>
+        <p class="cover-sub">Um livro de amor</p>
+        <h1>Nós duas</h1>
+        <div class="ornament">❦</div>
+        <p class="cover-hint">Toque para abrir</p>
       </section>
+
+      <!-- 2. POEMA DELA -->
       <section class="page text-page" id="page-1" onclick="turnNext()">
         <h2>Minha Nevascah❄️</h2>
         <div class="copy">Sim, por um au-au 🐾
@@ -80,22 +87,42 @@ Sim, você é a minha pessoa,
 meu fim da nevasca,
 meu começo de tudo,
 meu calor no meio do caos.</div>
-        <p class="signature">— Meu amor</p><p class="footer">— 1 —</p>
+        <p class="signature">— Meu amor</p>
+        <p class="footer">— 1 —</p>
       </section>
+
+      <!-- 3. MÚSICA SPOTIFY -->
       <section class="page music-page" id="page-2">
         <div class="player" onclick="event.stopPropagation()">
           <audio id="audio" src="musica.mp3" preload="metadata"></audio>
           <p class="player-label">Tocando a nossa trilha sonora</p>
-          <div class="album-art" id="art"><img src="capa.jpg" alt="Capa do álbum: mãos de água e fogo" onerror="this.alt='Coloque capa.jpg na mesma pasta do HTML'; this.style.opacity='.25'"></div>
-          <div class="track"><h3>Foi assim</h3><p>Sotam</p></div>
-          <div><input class="seek" id="seek" type="range" min="0" max="38" value="0" step="0.1" aria-label="Posição da música"><div class="times"><span id="current">0:00</span><span id="duration">0:38</span></div></div>
-          <div class="controls"><button aria-label="Voltar ao início" onclick="restartSong()">⏮</button><button class="play" id="play" aria-label="Tocar" onclick="togglePlay()">▶</button><button aria-label="Ir à resposta" onclick="turnNext()">⏭</button></div>
+          <div class="album-art" id="art">
+            <img src="capa.jpg" alt="Capa do álbum: mãos de água e fogo" onerror="this.style.opacity='0.3'">
+          </div>
+          <div class="track">
+            <h3>Foi assim</h3>
+            <p>Sotam</p>
+          </div>
+          <div>
+            <input class="seek" id="seek" type="range" min="0" max="38" value="0" step="0.1" aria-label="Posição da música">
+            <div class="times">
+              <span id="current">0:00</span>
+              <span id="duration">0:38</span>
+            </div>
+          </div>
+          <div class="controls">
+            <button aria-label="Voltar ao início" onclick="restartSong()">⏮</button>
+            <button class="play" id="play" aria-label="Tocar" onclick="togglePlay()">▶</button>
+            <button aria-label="Ir à resposta" onclick="turnNext()">⏭</button>
+          </div>
         </div>
         <p class="footer">— 2 —</p>
       </section>
+
+      <!-- 4. SUA RESPOSTA -->
       <section class="page text-page" id="page-3">
         <h2>Para meu amor🫀</h2>
-        <div class="copy">
+        <div class="copy">Meu amor,
 
 Me pego olhando as estrelas e me pergunto qual o significado de perfeição? A luz resplandecente das estrelas talvez, mas ela não chega aos pés do brilho dos seus olhos. Cativando-me a cada dia, a cada risada, cada briguinha, cada vez que liga para dormir.
 
@@ -108,11 +135,19 @@ Sei pouco sobre ti, mas tão pouco me deixa absurdamente encantada. Gostaria de 
 Sou teu refém, sou um caos sem você e passo muito longe da perfeição que tu és. No entanto, opto por viver com sua nevasca que me esfria, mas aquece quando estou contigo, que acalma meus dias e mente conturbada, me faz sorrir e tem o lado mais puro que ninguém jamais teve de mim.
 
 Você tem posse sobre a pessoa que eu sou e não me arrependo disso. Nenhuma das perguntas feitas importa desde que te tenha. Com toda certeza sou sua, assim como as estrelas pertencem ao céu.</div>
-        <p class="signature">— inteiramente sua!</p><p class="footer" style="font-size:1.5rem;color:#b83244">♥</p><p class="footer">— 3 —</p>
+        <p class="signature">— inteiramente sua!</p>
+        <p class="footer" style="font-size:1.5rem;color:#b83244">♥</p>
+        <p class="footer">— 3 —</p>
       </section>
     </div>
-    <nav class="nav" aria-label="Navegação do livro"><button id="prev" onclick="turnPrev()" disabled>‹ voltar</button><span id="indicator">1 / 4</span><button id="next" onclick="turnNext()">virar ›</button></nav>
+
+    <nav class="nav" aria-label="Navegação do livro">
+      <button id="prev" onclick="turnPrev()" disabled>‹ voltar</button>
+      <span id="indicator">1 / 4</span>
+      <button id="next" onclick="turnNext()">virar ›</button>
+    </nav>
   </main>
+
   <script>
     const totalPages = 4;
     let currentPage = 0;
@@ -122,20 +157,26 @@ Você tem posse sobre a pessoa que eu sou e não me arrependo disso. Nenhuma das
     const currentLabel = document.getElementById('current');
     const durationLabel = document.getElementById('duration');
     const art = document.getElementById('art');
-    const timeText = seconds => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
+    const timeText = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
 
-    for (let i = 0; i < totalPages; i++) document.getElementById(`page-${i}`).style.zIndex = totalPages - i;
+    for (let i = 0; i < totalPages; i++) {
+      document.getElementById(`page-${i}`).style.zIndex = totalPages - i;
+    }
+
     function updateNav() {
       document.getElementById('prev').disabled = currentPage === 0;
       document.getElementById('next').disabled = currentPage === totalPages - 1;
       document.getElementById('indicator').textContent = `${currentPage + 1} / ${totalPages}`;
     }
+
     function turnNext() {
       if (currentPage < totalPages - 1) {
         document.getElementById(`page-${currentPage}`).classList.add('flipped');
-        currentPage++; updateNav();
+        currentPage++;
+        updateNav();
       }
     }
+
     function turnPrev() {
       if (currentPage > 0) {
         currentPage--;
@@ -143,16 +184,25 @@ Você tem posse sobre a pessoa que eu sou e não me arrependo disso. Nenhuma das
         updateNav();
       }
     }
+
     async function togglePlay() {
       if (audio.paused) {
-        try { await audio.play(); } catch { alert('Não encontrei musica.mp3. Coloque o arquivo na mesma pasta do index.html.'); }
-      } else audio.pause();
+        try {
+          await audio.play();
+        } catch (e) {
+          console.warn('Para tocar com áudio real, certifique-se de que musica.mp3 está na mesma pasta.');
+        }
+      } else {
+        audio.pause();
+      }
     }
+
     function setPlaying(playing) {
       playButton.textContent = playing ? '❚❚' : '▶';
       playButton.setAttribute('aria-label', playing ? 'Pausar' : 'Tocar');
       art.classList.toggle('playing', playing);
     }
+
     audio.addEventListener('play', () => setPlaying(true));
     audio.addEventListener('pause', () => setPlaying(false));
     audio.addEventListener('loadedmetadata', () => {
@@ -168,7 +218,11 @@ Você tem posse sobre a pessoa que eu sou e não me arrependo disso. Nenhuma das
       if (Number.isFinite(audio.duration)) audio.currentTime = Number(seek.value);
       currentLabel.textContent = timeText(Number(seek.value));
     });
-    function restartSong() { audio.currentTime = 0; if (audio.paused) togglePlay(); }
+
+    function restartSong() {
+      audio.currentTime = 0;
+      if (audio.paused) togglePlay();
+    }
   </script>
 </body>
 </html>
